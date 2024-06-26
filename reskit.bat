@@ -21,7 +21,8 @@ echo.
 echo * 기타
 echo 11.Win11 Setup check bypass      12. 인터넷 연결없이 설치
 echo 13.기본 임시디렉토리 오픈        14. TEMP 변경
-echo 15.Hostname/Workgroup 변경
+echo 15.Hostname/Workgroup 변경       16. 예약된 저장소 삭제
+echo 17.Windows App 삭제
 echo --------------------------------------------------------------------------
 echo.
 set /p menunum="기능을 선택하세요: "
@@ -179,6 +180,17 @@ wmic computersystem where name="%computername%" call joindomainorworkgroup name=
 pause
 goto:eof
 
+:menu_16
+DISM.exe /Online /Set-ReservedStorageState /State:Disabled
+
+pause
+goto:eof
+
+:menu_17
+DISM.exe /Online /Set-ReservedStorageState /State:Disabled
+
+pause
+goto:eof
 
 
 :check_admin
@@ -275,4 +287,10 @@ REM schtasks /Change /TN "Microsoft\XblGameSave\XblGameSaveTask" /disable
 REM schtasks /Change /TN "Microsoft\XblGameSave\XblGameSaveTaskLogon" /disable
 REM reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR" /v AllowGameDVR /t REG_DWORD /d 0 /f
 
+Get-AppxPackage -allusers Microsoft.Todos | Remove-AppxPackage
+Get-AppxPackage -allusers MicrosoftCorporationII.QuickAssist | Remove-AppxPackage
+
+echo cotana
+Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage
+Get-AppxPackage -allusers Microsoft.GamingApp | Remove-AppxPackage
 :skipend
