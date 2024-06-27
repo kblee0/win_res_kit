@@ -187,7 +187,56 @@ pause
 goto:eof
 
 :menu_17
-DISM.exe /Online /Set-ReservedStorageState /State:Disabled
+REM Cotana
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.549981C3F5F10                  | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Clipchamp.Clipchamp                      | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.BingNews                       | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.BingWeather                    | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.GetHelp                        | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.Getstarted                     | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.MicrosoftOfficeHub             | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.MicrosoftSolitaireCollection   | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.People                         | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.PowerAutomateDesktop           | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.Todos                          | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.Windows.Photos                 | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  microsoft.windowscommunicationsapps      | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.WindowsFeedbackHub             | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.WindowsMaps                    | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.ZuneMusic                      | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.ZuneVideo                      | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  MicrosoftCorporationII.QuickAssist       | Remove-AppxPackage"
+
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.Print3D                        | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.Whiteboard                     | Remove-AppxPackage"
+PowerShell -Command "Get-AppxPackage -allusers  Microsoft.GamingApp                      | Remove-AppxPackage"
+
+REM Microsoft.WindowsMaps
+REM sc delete MapsBroker
+REM sc delete lfsvc
+REM schtasks /Change /TN "\Microsoft\Windows\Maps\MapsUpdateTask" /disable
+REM schtasks /Change /TN "\Microsoft\Windows\Maps\MapsToastTask" /disable
+
+REM Remove Package
+REM Get-AppxPackage -allusers *Microsoft.Office.Sway* | Remove-AppxPackage
+REM Get-AppxPackage -allusers *Microsoft.Office.Desktop* | Remove-AppxPackage
+REM Get-AppxPackage -allusers MicrosoftTeams | Remove-AppxPackage
+REM Get-AppxPackage -allusers *3dbuilder* | Remove-AppxPackage
+
+REM Get-AppxPackage -AllUsers *onenote* | Remove-AppxPackage
+REM Get-AppxPackage -AllUsers Disney.37853FC22B2CE  | Remove-AppxPackage
+REM Get-AppxPackage -AllUsers *SkypeApp* | Remove-AppxPackage
+REM Get-AppxPackage -AllUsers *SpotifyAB.SpotifyMusic* | Remove-AppxPackage
+
+REM Get-AppxPackage -AllUsers *xbox* | Remove-AppxPackage
+REM sc delete XblAuthManager
+REM sc delete XblGameSave
+REM sc delete XboxNetApiSvc
+REM sc delete XboxGipSvc
+REM reg delete "HKLM\SYSTEM\CurrentControlSet\Services\xbgm" /f
+REM schtasks /Change /TN "Microsoft\XblGameSave\XblGameSaveTask" /disable
+REM schtasks /Change /TN "Microsoft\XblGameSave\XblGameSaveTaskLogon" /disable
+REM reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR" /v AllowGameDVR /t REG_DWORD /d 0 /f
 
 pause
 goto:eof
@@ -242,55 +291,4 @@ kms789.com
 dimanyakms.sytes.net:1688
 kms.03k.org:1688
 
-REM Remove Package
-Get-AppxPackage -allusers Microsoft.People | Remove-AppxPackage
-Get-AppxPackage -allusers Microsoft.ZuneMusic | Remove-AppxPackage
-Get-AppxPackage -allusers Microsoft.ZuneVideo | Remove-AppxPackage
-Get-AppxPackage -allusers Microsoft.MicrosoftSolitaireCollection | Remove-AppxPackage
-
-Get-AppxPackage -allusers Microsoft.MicrosoftOfficeHub | Remove-AppxPackage
-Get-AppxPackage -allusers *Microsoft.Office.Sway* | Remove-AppxPackage
-Get-AppxPackage -allusers *Microsoft.Office.Desktop* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.GetHelp | Remove-AppxPackage
-Get-AppxPackage -allusers MicrosoftTeams | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.PowerAutomateDesktop | Remove-AppxPackage
-Get-AppxPackage -allusers Microsoft.WindowsFeedbackHub | Remove-AppxPackage
-Get-AppxPackage -allusers *3dbuilder* | Remove-AppxPackage
-
-Get-AppxPackage -AllUsers Microsoft.WindowsMaps | Remove-AppxPackage
-REM sc delete MapsBroker
-REM sc delete lfsvc
-REM schtasks /Change /TN "\Microsoft\Windows\Maps\MapsUpdateTask" /disable
-REM schtasks /Change /TN "\Microsoft\Windows\Maps\MapsToastTask" /disable
-
-Get-AppxPackage -AllUsers *onenote* | Remove-AppxPackage
-Get-AppxPackage -allusers Microsoft.Getstarted | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.Windows.Photos | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.BingNews | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.BingWeather | Remove-AppxPackage
-Get-AppxPackage -AllUsers Disney.37853FC22B2CE  | Remove-AppxPackage
-Get-AppxPackage -AllUsers *SkypeApp* | Remove-AppxPackage
-Get-AppxPackage -AllUsers *SpotifyAB.SpotifyMusic* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.windowscommunicationsapps | Remove-AppxPackage 
-Get-AppxPackage -allusers Clipchamp.Clipchamp | Remove-AppxPackage
-Get-AppxPackage -allusers Microsoft.Microsoft.Getstarted | Remove-AppxPackage
-Get-AppxPackage -allusers Microsoft.Print3D | Remove-AppxPackage
-Get-AppxPackage -allusers Microsoft.Whiteboard | Remove-AppxPackage
-
-Get-AppxPackage -AllUsers *xbox* | Remove-AppxPackage
-REM sc delete XblAuthManager
-REM sc delete XblGameSave
-REM sc delete XboxNetApiSvc
-REM sc delete XboxGipSvc
-REM reg delete "HKLM\SYSTEM\CurrentControlSet\Services\xbgm" /f
-REM schtasks /Change /TN "Microsoft\XblGameSave\XblGameSaveTask" /disable
-REM schtasks /Change /TN "Microsoft\XblGameSave\XblGameSaveTaskLogon" /disable
-REM reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR" /v AllowGameDVR /t REG_DWORD /d 0 /f
-
-Get-AppxPackage -allusers Microsoft.Todos | Remove-AppxPackage
-Get-AppxPackage -allusers MicrosoftCorporationII.QuickAssist | Remove-AppxPackage
-
-echo cotana
-Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage
-Get-AppxPackage -allusers Microsoft.GamingApp | Remove-AppxPackage
 :skipend
