@@ -23,6 +23,11 @@ echo 11.Win11 Setup check bypass      12. 인터넷 연결없이 설치
 echo 13.기본 임시디렉토리 오픈        14. TEMP 변경
 echo 15.Hostname/Workgroup 변경       16. 예약된 저장소 삭제
 echo 17.Windows App 삭제
+echo.
+echo App 목록: Get-AppxPackage | select Name, PackageFamilyName
+echo           Get-AppxPackage -AllUsers | select Name, PackageFamilyName
+echo App 삭제: Get-AppxPackage Name | Remove-AppxPackage
+echo           Get-AppxPackage -AllUsers Name | Remove-AppxPackage
 echo --------------------------------------------------------------------------
 echo.
 set /p menunum="기능을 선택하세요: "
