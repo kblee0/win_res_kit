@@ -5,7 +5,8 @@ goto :check_admin
 cls
 
 echo --------------------------------------------------------------------------
-echo 0. Exit
+echo 0. Exit                          99. Reboot
+echo.
 echo 1. 키보드 속도 빠르게 설정        2. 한영전환 Shift-Space, 한글 동시지원
 echo 3. 다운로드 Savezone 비활성화
 echo.
@@ -34,6 +35,10 @@ set /p menunum="기능을 선택하세요: "
 If 0%menunum% EQU 0 Exit /B
 
 call :menu_%menunum%
+goto :main
+
+:menu_99
+shutdown /r /t 0
 goto :main
 
 :menu_1
@@ -148,7 +153,6 @@ goto:eof
 
 :menu_12
 Reg.exe add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OOBE /v BypassNRO /t REG_DWORD /d 1 /f
-shutdown /r /t 0
 
 pause
 goto:eof
