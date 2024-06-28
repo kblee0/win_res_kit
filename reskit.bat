@@ -31,9 +31,7 @@ echo           Get-AppxPackage -AllUsers Name ^| Remove-AppxPackage
 echo --------------------------------------------------------------------------
 echo.
 set /p menunum="기능을 선택하세요: "
-If %menunum% EQU 0 (
- Exit /B
-)
+If 0%menunum% EQU 0 Exit /B
 
 call :menu_%menunum%
 goto :main
@@ -193,28 +191,32 @@ pause
 goto:eof
 
 :menu_17
-REM Cotana
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.549981C3F5F10                  | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Clipchamp.Clipchamp                      | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.BingNews                       | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.BingWeather                    | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.GetHelp                        | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.Getstarted                     | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.MicrosoftOfficeHub             | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.MicrosoftSolitaireCollection   | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.People                         | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.PowerAutomateDesktop           | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.Todos                          | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.Windows.Photos                 | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  microsoft.windowscommunicationsapps      | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.WindowsFeedbackHub             | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.WindowsMaps                    | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.ZuneMusic                      | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.ZuneVideo                      | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  MicrosoftCorporationII.QuickAssist       | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.Print3D                        | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.Whiteboard                     | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage -allusers  Microsoft.GamingApp                      | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Clipchamp.Clipchamp                    | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.549981C3F5F10                | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.BingNews                     | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.BingWeather                  | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.GamingApp                    | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.GetHelp                      | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.Getstarted                   | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.MicrosoftOfficeHub           | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.MicrosoftSolitaireCollection | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.MicrosoftStickyNotes         | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.People                       | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.PowerAutomateDesktop         | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.Todos                        | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.Windows.Photos               | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.WindowsAlarms                | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.WindowsCamera                | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.WindowsFeedbackHub           | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.WindowsMaps                  | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.WindowsSoundRecorder         | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.Xbox.TCUI                    | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.YourPhone                    | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.ZuneMusic                    | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.ZuneVideo                    | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers MicrosoftCorporationII.QuickAssist     | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers microsoft.windowscommunicationsapps    | Remove-AppxPackage"
+
 REM Microsoft.WindowsMaps
 REM sc delete MapsBroker
 REM sc delete lfsvc
