@@ -23,7 +23,8 @@ echo 7.  Publisher   [%Publisher%]
 echo 8.  OneDrive    [%OneDrive%]
 echo 9.  Lync        [%Lync%]
 echo.
-echo 91. Install     92. Download
+echo 91. Install                      92. Download
+echo 93. Excel 기본글꼴(본문 글꼴,9)
 echo 0.  Exit
 echo.
 set /p menunum="설치항목을 선택하세요: "
@@ -69,6 +70,11 @@ if  %menunum% EQU 92 (
 call :config_tmp
 type config_tmp.xml
 echo setup /download config_tmp.xml
+pause
+)
+
+if  %menunum% EQU 93 (
+Reg.exe add "HKCU\Software\Microsoft\Office\16.0\Excel\Options" /v "Font" /t REG_SZ /d "본문 글꼴,9" /f
 pause
 )
 
