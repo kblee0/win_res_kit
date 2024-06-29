@@ -167,11 +167,11 @@ goto:eof
 
 :menu_14
 set /p tmpdir="디렉토리: "
-mkdir %tmpdir%
+IF NOT EXIST "%tmpdir%" mkdir "%tmpdir%"
 Reg.exe DELETE HKCU\Environment /v TEMP /f
 Reg.exe DELETE HKCU\Environment /v TMP /f
-setx TEMP %tmpdir% /m
-setx TMP %tmpdir% /m
+setx TEMP "%tmpdir%" /m
+setx TMP "%tmpdir%" /m
 
 pause
 goto:eof
