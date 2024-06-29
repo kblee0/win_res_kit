@@ -8,9 +8,7 @@ set OneNote=O
 set Access=X
 set Publisher=X
 set OneDrive=X
-set Groove=X
 set Lync=X
-set Teams=X
 
 :main
 cls
@@ -23,9 +21,7 @@ echo 5.  OneNote     [%OneNote%]
 echo 6.  Access      [%Access%]
 echo 7.  Publisher   [%Publisher%]
 echo 8.  OneDrive    [%OneDrive%]
-echo 9.  Groove      [%Groove%]
-echo 10. Lync        [%Lync%]
-echo 11. Teams       [%Teams%]
+echo 9.  Lync        [%Lync%]
 echo.
 echo 91. Install     92. Download
 echo 0.  Exit
@@ -59,13 +55,7 @@ if  %menunum% EQU 8 (
 	if %OneDrive%==O (set OneDrive=X) Else (set OneDrive=O)
 )
 if  %menunum% EQU 9 (
-	if %Groove%==O (set Groove=X) Else (set Groove=O)
-)
-if  %menunum% EQU 10 (
 	if %Lync%==O (set Lync=X) Else (set Lync=O)
-)
-if  %menunum% EQU 11 (
-	if %Teams%==O (set Teams=X) Else (set Teams=O)
 )
 
 if  %menunum% EQU 91 (
@@ -97,9 +87,7 @@ if %OneNote%==X (echo        ^<ExcludeApp ID="OneNote" /^>>>config_tmp.xml)
 if %Access%==X (echo        ^<ExcludeApp ID="Access" /^>>>config_tmp.xml)
 if %Publisher%==X (echo        ^<ExcludeApp ID="Publisher" /^>>>config_tmp.xml)
 if %OneDrive%==X (echo        ^<ExcludeApp ID="OneDrive" /^>>>config_tmp.xml)
-if %Groove%==X (echo        ^<ExcludeApp ID="Groove" /^>>>config_tmp.xml)
 if %Lync%==X (echo        ^<ExcludeApp ID="Lync" /^>>>config_tmp.xml)
-if %Teams%==X (echo        ^<ExcludeApp ID="Teams" /^>>>config_tmp.xml)
 echo     ^</Product^>>>config_tmp.xml
 echo   ^</Add^>>>config_tmp.xml
 echo   ^<Remove All="True" /^>>>config_tmp.xml
