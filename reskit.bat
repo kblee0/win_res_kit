@@ -7,31 +7,28 @@ cls
 echo --------------------------------------------------------------------------
 echo 0. Exit                          99. Reboot
 echo.
-echo 1. Å°º¸µå ¼Óµµ ºü¸£°Ô ¼³Á¤        2. ÇÑ¿µÀüÈ¯ Shift-Space, ÇÑ±Û µ¿½ÃÁö¿ø
-echo 3. ´Ù¿î·Îµå Savezone ºñÈ°¼ºÈ­
+echo 1. í‚¤ë³´ë“œ ì†ë„ ë¹ ë¥´ê²Œ ì„¤ì •        2. í•œì˜ì „í™˜ Shift-Space, í•œê¸€ ë™ì‹œì§€ì›
+echo 3. ë‹¤ìš´ë¡œë“œ Savezone ë¹„í™œì„±í™”
 echo.
 echo * Windows 11
-echo 4. À§Á¬ ºñÈ°¼ºÈ­                  5. CoPilot ºñÈ°¼ºÈ­
-echo 6. ¹é±×¶ó¿îµå¾Û ÁßÁö
-echo 7. PC½Ã°£À» UTC ·Î¼³Á¤
+echo 4. ìœ„ì ¯ ë¹„í™œì„±í™”                  5. CoPilot ë¹„í™œì„±í™”
+echo 6. ë°±ê·¸ë¼ìš´ë“œì•± ì¤‘ì§€
+echo 7. PCì‹œê°„ì„ UTC ë¡œì„¤ì •
 echo.
-echo * ÀÎÁõ
-echo 8. Office 2021 Pro KMSÀÎÁõ        9. Office 2021 Pro KMSÀÎÁõ(192.168.4.12)
-echo 10.Winrar µî·Ï
+echo * ì¸ì¦
+echo 10.Winrar ë“±ë¡
 echo.
-echo * ±âÅ¸
-echo 11.Win11 Setup check bypass      12. ÀÎÅÍ³İ ¿¬°á¾øÀÌ ¼³Ä¡
-echo 13.±âº» ÀÓ½Ãµğ·ºÅä¸® ¿ÀÇÂ        14. TEMP º¯°æ
-echo 15.Hostname/Workgroup º¯°æ       16. ¿¹¾àµÈ ÀúÀå¼Ò »èÁ¦
-echo 17.Windows App »èÁ¦
+echo * ê¸°íƒ€
+echo 11.Win11 Setup check bypass      12. ì¸í„°ë„· ì—°ê²°ì—†ì´ ì„¤ì¹˜
+echo 13.ê¸°ë³¸ ì„ì‹œë””ë ‰í† ë¦¬ ì˜¤í”ˆ        14. TEMP ë³€ê²½
+echo 15.Hostname/Workgroup ë³€ê²½       16. ì˜ˆì•½ëœ ì €ì¥ì†Œ ì‚­ì œ
+echo 17.Windows App ì‚­ì œ
 echo.
-echo App ¸ñ·Ï: Get-AppxPackage ^| select Name, PackageFamilyName
-echo           Get-AppxPackage -AllUsers ^| select Name, PackageFamilyName
-echo App »èÁ¦: Get-AppxPackage Name ^| Remove-AppxPackage
-echo           Get-AppxPackage -AllUsers Name ^| Remove-AppxPackage
+echo * Office
+echo 18.MS Office
 echo --------------------------------------------------------------------------
 echo.
-set /p menunum="±â´ÉÀ» ¼±ÅÃÇÏ¼¼¿ä: "
+set /p menunum="ê¸°ëŠ¥ì„ ì„ íƒí•˜ì„¸ìš”: "
 
 If 0%menunum% EQU 0 Exit /B
 
@@ -43,7 +40,7 @@ shutdown /r /t 0
 goto :main
 
 :menu_1
-echo Å°º¸µå ¼Óµµ ºü¸£°Ô ¼³Á¤
+echo í‚¤ë³´ë“œ ì†ë„ ë¹ ë¥´ê²Œ ì„¤ì •
 Reg.exe add "HKCU\Control Panel\Keyboard" /v "InitialKeyboardIndicators" /t REG_SZ /d "2" /f
 Reg.exe add "HKCU\Control Panel\Keyboard" /v "KeyboardDelay" /t REG_SZ /d "0" /f
 Reg.exe add "HKCU\Control Panel\Keyboard" /v "KeyboardSpeed" /t REG_SZ /d "31" /f
@@ -52,7 +49,7 @@ pause
 goto:eof
 
 :menu_2
-echo ÇÑ¿µÀüÈ¯ Shift-Space, ÇÑ±Û µ¿½ÃÁö¿ø
+echo í•œì˜ì „í™˜ Shift-Space, í•œê¸€ ë™ì‹œì§€ì›
 Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Services\i8042prt\Parameters" /v "LayerDriver KOR" /t REG_SZ /d "kbd101c.dll" /f
 Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Services\i8042prt\Parameters" /v "OverrideKeyboardIdentifier" /t REG_SZ /d "PCAT_101CKEY" /f
 Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Services\i8042prt\Parameters" /v "OverrideKeyboardSubtype" /t REG_DWORD /d "5" /f
@@ -63,9 +60,9 @@ pause
 goto:eof
 
 :menu_3
-echo ´Ù¿î·Îµå Savezone ºñÈ°¼ºÈ­
-REM ; ´Ù¿î·ÎµåÇÏ´Â ÆÄÀÏÀÇ º¸¾È Á¤º¸ ÀúÀå
-REM ; 0ÀÌ¸é ÀúÀå, 1ÀÌ¸é ÀúÀå ¾È ÇÔ.
+echo ë‹¤ìš´ë¡œë“œ Savezone ë¹„í™œì„±í™”
+REM ; ë‹¤ìš´ë¡œë“œí•˜ëŠ” íŒŒì¼ì˜ ë³´ì•ˆ ì •ë³´ ì €ì¥
+REM ; 0ì´ë©´ ì €ì¥, 1ì´ë©´ ì €ì¥ ì•ˆ í•¨.
 Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments" /v "SaveZoneInformation" /t REG_DWORD /d "1" /f
 Reg.exe add "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments" /v "SaveZoneInformation" /t REG_DWORD /d "1" /f
 
@@ -73,21 +70,21 @@ pause
 goto:eof
 
 :menu_4
-echo À§Á¬ ºñÈ°¼ºÈ­
+echo ìœ„ì ¯ ë¹„í™œì„±í™”
 Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Dsh" /v "AllowNewsAndInterests" /t REG_DWORD /d "0" /f
 
 pause
 goto:eof
 
 :menu_5
-echo CoPilot ºñÈ°¼ºÈ­
+echo CoPilot ë¹„í™œì„±í™”
 Reg.exe add "HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot" /v "TurnOffWindowsCopilot" /t REG_DWORD /d "1" /f
 
 pause
 goto:eof
 
 :menu_6
-echo ¹é±×¶ó¿îµå¾Û ÁßÁö
+echo ë°±ê·¸ë¼ìš´ë“œì•± ì¤‘ì§€
 Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" /v "LetAppsRuninBackgroud" /t REG_DWORD /d "2" /f
 
 pause
@@ -95,33 +92,8 @@ goto:eof
 
 
 :menu_7
-echo PC½Ã°£À» UTC ·Î¼³Á¤
+echo PCì‹œê°„ì„ UTC ë¡œì„¤ì •
 Reg.exe add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation" /v RealTimeIsUniversal /t REG_DWORD /d "1" /f
-
-pause
-goto:eof
-
-:menu_8
-set office2021_act_status=1
-cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /inpkey:FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
-
-call :office2021_act kms.digiboy.ir
-call :office2021_act hq1.chinancce.com
-call :office2021_act kms.cnlic.com
-call :office2021_act kms.chinancce.com
-call :office2021_act kms.digiboy.ir
-
-rem cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus
-
-pause
-goto:eof
-
-:menu_9
-set office2021_act_status=1
-cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /inpkey:FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
-
-call :office2021_act 192.168.4.12
-rem cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus
 
 pause
 goto:eof
@@ -166,7 +138,7 @@ pause
 goto:eof
 
 :menu_14
-set /p tmpdir="µğ·ºÅä¸®: "
+set /p tmpdir="ë””ë ‰í† ë¦¬: "
 IF NOT EXIST "%tmpdir%" mkdir "%tmpdir%"
 Reg.exe DELETE HKCU\Environment /v TEMP /f
 Reg.exe DELETE HKCU\Environment /v TMP /f
@@ -248,6 +220,10 @@ REM reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR" /v AllowGameDVR /
 pause
 goto:eof
 
+:menu_18
+call :officemenu
+
+goto:eof
 
 :check_admin
 Reg.exe query "HKU\S-1-5-19\Environment"
@@ -256,6 +232,143 @@ If Not %ERRORLEVEL% EQU 0 (
  Exit /B
 )
 goto :main
+
+REM =================================================================================
+
+:officemenu
+set Word=O
+set Excel=O
+set PowerPoint=O
+set Outlook=O
+set OneNote=O
+set Access=X
+set Publisher=X
+set OneDrive=X
+set Lync=X
+
+:officemain
+cls
+
+echo --------------------------------------------------------------------------
+echo.
+echo * ì„¤ì¹˜í•  í•­ëª©ì„ íƒ
+echo 1.  Word        [%Word%]
+echo 2.  Excel       [%Excel%]
+echo 3.  PowerPoint  [%PowerPoint%]
+echo 4.  Outlook     [%Outlook%]
+echo 5.  OneNote     [%OneNote%]
+echo 6.  Access      [%Access%]
+echo 7.  Publisher   [%Publisher%]
+echo 8.  OneDrive    [%OneDrive%]
+echo 9.  Lync        [%Lync%]
+echo.
+echo 91. Install                      92. Download
+echo 93. Excel ê¸°ë³¸ê¸€ê¼´(ë³¸ë¬¸ ê¸€ê¼´,9)
+echo.
+echo 94. Office 2021 Pro KMSì¸ì¦      95. Office 2021 Pro KMSì¸ì¦(192.168.4.12)
+echo.
+echo 0.  return Main
+echo.
+echo --------------------------------------------------------------------------
+set /p menunum="ì„¤ì¹˜í•­ëª©ì„ ì„ íƒí•˜ì„¸ìš”: "
+
+If 0%menunum% EQU 0 Exit /B
+
+if  %menunum% EQU 1 (
+	if %Word%==O (set Word=X) Else (set Word=O)
+)
+if  %menunum% EQU 2 (
+	if %Excel%==O (set Excel=X) Else (set Excel=O)
+)
+if  %menunum% EQU 3 (
+	if %PowerPoint%==O (set PowerPoint=X) Else (set PowerPoint=O)
+)
+if  %menunum% EQU 4 (
+	if %Outlook%==O (set Outlook=X) Else (set Outlook=O)
+)
+if  %menunum% EQU 5 (
+	if %OneNote%==O (set OneNote=X) Else (set OneNote=O)
+)
+if  %menunum% EQU 6 (
+	if %Access%==O (set Access=X) Else (set Access=O)
+)
+if  %menunum% EQU 7 (
+	if %Publisher%==O (set Publisher=X) Else (set Publisher=O)
+)
+if  %menunum% EQU 8 (
+	if %OneDrive%==O (set OneDrive=X) Else (set OneDrive=O)
+)
+if  %menunum% EQU 9 (
+	if %Lync%==O (set Lync=X) Else (set Lync=O)
+)
+
+if  %menunum% EQU 91 (
+call :config_tmp
+type "%~dp0config_tmp.xml"
+IF NOT EXIST "%~dp0setup.exe" curl -o "%~dp0setup.exe" https://raw.githubusercontent.com/kblee0/win_res_kit/main/setup.exe
+echo "%~dp0setup.exe" /configure "%~dp0config_tmp.xml"
+pause
+)
+
+if  %menunum% EQU 92 (
+call :config_tmp
+type "%~dp0config_tmp.xml"
+IF NOT EXIST "%~dp0setup.exe" curl -o "%~dp0setup.exe" https://raw.githubusercontent.com/kblee0/win_res_kit/main/setup.exe
+echo "%~dp0setup.exe" /download "%~dp0config_tmp.xml"
+pause
+)
+
+if  %menunum% EQU 93 (
+Reg.exe add "HKCU\Software\Microsoft\Office\16.0\Excel\Options" /v "Font" /t REG_SZ /d "ë³¸ë¬¸ ê¸€ê¼´,9" /f
+pause
+)
+
+if  %menunum% EQU 94 (
+set office2021_act_status=1
+cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /inpkey:FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
+
+call :office2021_act kms.digiboy.ir
+call :office2021_act hq1.chinancce.com
+call :office2021_act kms.cnlic.com
+call :office2021_act kms.chinancce.com
+call :office2021_act kms.digiboy.ir
+
+rem cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus
+
+pause
+)
+
+if  %menunum% EQU 95 (
+set office2021_act_status=1
+cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /inpkey:FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
+
+call :office2021_act 192.168.4.12
+rem cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus
+
+pause
+)
+
+goto :officemain
+
+:config_tmp
+echo ^<Configuration^>>"%~dp0config_tmp.xml"
+echo   ^<Add OfficeClientEdition="64" Channel="PerpetualVL2021"^>>>"%~dp0config_tmp.xml"
+echo     ^<Product ID="ProPlus2021Volume" PIDKEY="FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH"^>>>"%~dp0config_tmp.xml"
+echo       ^<Language ID="ko-kr" /^>>>"%~dp0config_tmp.xml"
+if %Word%==X (echo        ^<ExcludeApp ID="Word" /^>>>"%~dp0config_tmp.xml")
+if %Excel%==X (echo        ^<ExcludeApp ID="Excel" /^>>>"%~dp0config_tmp.xml")
+if %PowerPoint%==X (echo        ^<ExcludeApp ID="PowerPoint" /^>>>"%~dp0config_tmp.xml")
+if %Outlook%==X (echo        ^<ExcludeApp ID="Outlook" /^>>>"%~dp0config_tmp.xml")
+if %OneNote%==X (echo        ^<ExcludeApp ID="OneNote" /^>>>"%~dp0config_tmp.xml")
+if %Access%==X (echo        ^<ExcludeApp ID="Access" /^>>>"%~dp0config_tmp.xml")
+if %Publisher%==X (echo        ^<ExcludeApp ID="Publisher" /^>>>"%~dp0config_tmp.xml")
+if %OneDrive%==X (echo        ^<ExcludeApp ID="OneDrive" /^>>>"%~dp0config_tmp.xml")
+if %Lync%==X (echo        ^<ExcludeApp ID="Lync" /^>>>"%~dp0config_tmp.xml")
+echo     ^</Product^>>>"%~dp0config_tmp.xml"
+echo   ^</Add^>>>"%~dp0config_tmp.xml"
+echo   ^<Remove All="True" /^>>>"%~dp0config_tmp.xml"
+echo ^</Configuration^>>>"%~dp0config_tmp.xml"
+goto:eof
 
 :office2021_act
 if %office2021_act_status%==0 goto:eof
@@ -269,12 +382,14 @@ echo.
 if %office2021_act_status%==0 goto:eof
 
 cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /sethst:%1
-cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /act > act_tmp.log
-type act_tmp.log
-findstr successful act_tmp.log
+cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /act > "%~dp0act_tmp.log"
+type "%~dp0act_tmp.log"
+findstr successful "%~dp0act_tmp.log"
 set office2021_act_status=%errorlevel%
+del "%~dp0act_tmp.log"
 
 goto:eof
+
 
 
 goto :skipend
