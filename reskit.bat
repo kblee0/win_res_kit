@@ -7,28 +7,28 @@ cls
 echo --------------------------------------------------------------------------
 echo 0. Exit                          99. Reboot
 echo.
-echo 1. í‚¤ë³´ë“œ ì†ë„ ë¹ ë¥´ê²Œ ì„¤ì •        2. í•œì˜ì „í™˜ Shift-Space, í•œê¸€ ë™ì‹œì§€ì›
-echo 3. ë‹¤ìš´ë¡œë“œ Savezone ë¹„í™œì„±í™”
+echo 1. Å°º¸µå ¼Óµµ ºü¸£°Ô ¼³Á¤        2. ÇÑ¿µÀüÈ¯ Shift-Space, ÇÑ±Û µ¿½ÃÁö¿ø
+echo 3. ´Ù¿î·Îµå Savezone ºñÈ°¼ºÈ­
 echo.
 echo * Windows 11
-echo 4. ìœ„ì ¯ ë¹„í™œì„±í™”                  5. CoPilot ë¹„í™œì„±í™”
-echo 6. ë°±ê·¸ë¼ìš´ë“œì•± ì¤‘ì§€
-echo 7. PCì‹œê°„ì„ UTC ë¡œì„¤ì •
+echo 4. À§Á¬ ºñÈ°¼ºÈ­                  5. CoPilot ºñÈ°¼ºÈ­
+echo 6. ¹é±×¶ó¿îµå¾Û ÁßÁö
+echo 7. PC½Ã°£À» UTC ·Î¼³Á¤
 echo.
-echo * ì¸ì¦
-echo 10.Winrar ë“±ë¡
+echo * ÀÎÁõ
+echo 10.Winrar µî·Ï
 echo.
-echo * ê¸°íƒ€
-echo 11.Win11 Setup check bypass      12. ì¸í„°ë„· ì—°ê²°ì—†ì´ ì„¤ì¹˜
-echo 13.ê¸°ë³¸ ì„ì‹œë””ë ‰í† ë¦¬ ì˜¤í”ˆ        14. TEMP ë³€ê²½
-echo 15.Hostname/Workgroup ë³€ê²½       16. ì˜ˆì•½ëœ ì €ì¥ì†Œ ì‚­ì œ
-echo 17.Windows App ì‚­ì œ
+echo * ±âÅ¸
+echo 11.Win11 Setup check bypass      12. ÀÎÅÍ³İ ¿¬°á¾øÀÌ ¼³Ä¡
+echo 13.±âº» ÀÓ½Ãµğ·ºÅä¸® ¿ÀÇÂ        14. TEMP º¯°æ
+echo 15.Hostname/Workgroup º¯°æ       16. ¿¹¾àµÈ ÀúÀå¼Ò »èÁ¦
+echo 17.Windows App »èÁ¦
 echo.
 echo * Office
 echo 18.MS Office
 echo --------------------------------------------------------------------------
 echo.
-set /p menunum="ê¸°ëŠ¥ì„ ì„ íƒí•˜ì„¸ìš”: "
+set /p menunum="±â´ÉÀ» ¼±ÅÃÇÏ¼¼¿ä: "
 
 If 0%menunum% EQU 0 Exit /B
 
@@ -40,7 +40,7 @@ shutdown /r /t 0
 goto :main
 
 :menu_1
-echo í‚¤ë³´ë“œ ì†ë„ ë¹ ë¥´ê²Œ ì„¤ì •
+echo Å°º¸µå ¼Óµµ ºü¸£°Ô ¼³Á¤
 Reg.exe add "HKCU\Control Panel\Keyboard" /v "InitialKeyboardIndicators" /t REG_SZ /d "2" /f
 Reg.exe add "HKCU\Control Panel\Keyboard" /v "KeyboardDelay" /t REG_SZ /d "0" /f
 Reg.exe add "HKCU\Control Panel\Keyboard" /v "KeyboardSpeed" /t REG_SZ /d "31" /f
@@ -49,7 +49,7 @@ pause
 goto:eof
 
 :menu_2
-echo í•œì˜ì „í™˜ Shift-Space, í•œê¸€ ë™ì‹œì§€ì›
+echo ÇÑ¿µÀüÈ¯ Shift-Space, ÇÑ±Û µ¿½ÃÁö¿ø
 Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Services\i8042prt\Parameters" /v "LayerDriver KOR" /t REG_SZ /d "kbd101c.dll" /f
 Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Services\i8042prt\Parameters" /v "OverrideKeyboardIdentifier" /t REG_SZ /d "PCAT_101CKEY" /f
 Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Services\i8042prt\Parameters" /v "OverrideKeyboardSubtype" /t REG_DWORD /d "5" /f
@@ -60,9 +60,9 @@ pause
 goto:eof
 
 :menu_3
-echo ë‹¤ìš´ë¡œë“œ Savezone ë¹„í™œì„±í™”
-REM ; ë‹¤ìš´ë¡œë“œí•˜ëŠ” íŒŒì¼ì˜ ë³´ì•ˆ ì •ë³´ ì €ì¥
-REM ; 0ì´ë©´ ì €ì¥, 1ì´ë©´ ì €ì¥ ì•ˆ í•¨.
+echo ´Ù¿î·Îµå Savezone ºñÈ°¼ºÈ­
+REM ; ´Ù¿î·ÎµåÇÏ´Â ÆÄÀÏÀÇ º¸¾È Á¤º¸ ÀúÀå
+REM ; 0ÀÌ¸é ÀúÀå, 1ÀÌ¸é ÀúÀå ¾È ÇÔ.
 Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments" /v "SaveZoneInformation" /t REG_DWORD /d "1" /f
 Reg.exe add "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments" /v "SaveZoneInformation" /t REG_DWORD /d "1" /f
 
@@ -70,21 +70,21 @@ pause
 goto:eof
 
 :menu_4
-echo ìœ„ì ¯ ë¹„í™œì„±í™”
+echo À§Á¬ ºñÈ°¼ºÈ­
 Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Dsh" /v "AllowNewsAndInterests" /t REG_DWORD /d "0" /f
 
 pause
 goto:eof
 
 :menu_5
-echo CoPilot ë¹„í™œì„±í™”
+echo CoPilot ºñÈ°¼ºÈ­
 Reg.exe add "HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot" /v "TurnOffWindowsCopilot" /t REG_DWORD /d "1" /f
 
 pause
 goto:eof
 
 :menu_6
-echo ë°±ê·¸ë¼ìš´ë“œì•± ì¤‘ì§€
+echo ¹é±×¶ó¿îµå¾Û ÁßÁö
 Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" /v "LetAppsRuninBackgroud" /t REG_DWORD /d "2" /f
 
 pause
@@ -92,7 +92,7 @@ goto:eof
 
 
 :menu_7
-echo PCì‹œê°„ì„ UTC ë¡œì„¤ì •
+echo PC½Ã°£À» UTC ·Î¼³Á¤
 Reg.exe add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation" /v RealTimeIsUniversal /t REG_DWORD /d "1" /f
 
 pause
@@ -138,7 +138,7 @@ pause
 goto:eof
 
 :menu_14
-set /p tmpdir="ë””ë ‰í† ë¦¬: "
+set /p tmpdir="µğ·ºÅä¸®: "
 IF NOT EXIST "%tmpdir%" mkdir "%tmpdir%"
 Reg.exe DELETE HKCU\Environment /v TEMP /f
 Reg.exe DELETE HKCU\Environment /v TMP /f
@@ -251,7 +251,7 @@ cls
 
 echo --------------------------------------------------------------------------
 echo.
-echo * ì„¤ì¹˜í•  í•­ëª©ì„ íƒ
+echo * ¼³Ä¡ÇÒ Ç×¸ñ¼±ÅÃ
 echo 1.  Word        [%Word%]
 echo 2.  Excel       [%Excel%]
 echo 3.  PowerPoint  [%PowerPoint%]
@@ -263,14 +263,14 @@ echo 8.  OneDrive    [%OneDrive%]
 echo 9.  Lync        [%Lync%]
 echo.
 echo 91. Install                      92. Download
-echo 93. Excel ê¸°ë³¸ê¸€ê¼´(ë³¸ë¬¸ ê¸€ê¼´,9)
+echo 93. Excel ±âº»±Û²Ã(º»¹® ±Û²Ã,9)
 echo.
-echo 94. Office 2021 Pro KMSì¸ì¦      95. Office 2021 Pro KMSì¸ì¦(192.168.4.12)
+echo 94. Office 2021 Pro KMSÀÎÁõ      95. Office 2021 Pro KMSÀÎÁõ(192.168.4.12)
 echo.
 echo 0.  return Main
 echo.
 echo --------------------------------------------------------------------------
-set /p menunum="ì„¤ì¹˜í•­ëª©ì„ ì„ íƒí•˜ì„¸ìš”: "
+set /p menunum="¼³Ä¡Ç×¸ñÀ» ¼±ÅÃÇÏ¼¼¿ä: "
 
 If 0%menunum% EQU 0 Exit /B
 
@@ -319,7 +319,7 @@ pause
 )
 
 if  %menunum% EQU 93 (
-Reg.exe add "HKCU\Software\Microsoft\Office\16.0\Excel\Options" /v "Font" /t REG_SZ /d "ë³¸ë¬¸ ê¸€ê¼´,9" /f
+Reg.exe add "HKCU\Software\Microsoft\Office\16.0\Excel\Options" /v "Font" /t REG_SZ /d "º»¹® ±Û²Ã,9" /f
 pause
 )
 
