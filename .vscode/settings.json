@@ -1,3 +1,4 @@
 {
-    "files.encoding": "euckr"
+    "files.encoding": "euckr",
+    "git-graph.fileEncoding": "EUC-KR"
 }
