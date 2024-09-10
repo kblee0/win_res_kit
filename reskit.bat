@@ -282,6 +282,8 @@ set Access=X
 set Publisher=X
 set OneDrive=X
 set Lync=X
+set Bing=X
+set Teams=X
 
 :officemain
 cls
@@ -298,11 +300,17 @@ echo  6.  Access      [%Access%]
 echo  7.  Publisher   [%Publisher%]
 echo  8.  OneDrive    [%OneDrive%]
 echo  9.  Lync        [%Lync%]
+echo 10.  Teams       [%Teams%]
+echo 11.  Bing (2024) [%Bing%]
 echo.
-echo 91. Install                         92. Download
+echo 21. 2021 Install                    22. 2021 Download
+echo 23. 365  Install                    24. 365 Download
+echo 25. 2024 Install                    26. 2024 Download
+echo.
 echo 93. Excel 기본글꼴(본문 글꼴,9)
 echo.
-echo 94. Office 2021 Pro KMS인증 (외부)  95. Office 2021 Pro KMS인증(192.168.4.12)
+echo 94. Office KMS인증 (외부)           95. Office KMS인증(192.168.4.12)
+echo 96. Office 365 Volume전환
 echo.
 echo  0. return Main
 echo.
@@ -338,20 +346,58 @@ if  %menunum% EQU 8 (
 if  %menunum% EQU 9 (
 	if %Lync%==O (set Lync=X) Else (set Lync=O)
 )
+if  %menunum% EQU 10 (
+	if %Teams%==O (set Teams=X) Else (set Teams=O)
+)
+if  %menunum% EQU 11 (
+	if %Bing%==O (set Bing=X) Else (set Bing=O)
+)
 
-if  %menunum% EQU 91 (
-call :config_tmp
+if  %menunum% EQU 21 (
+call :config_tmp_2021
 type "%~dp0config_tmp.xml"
 IF NOT EXIST "%~dp0setup.exe" curl -o "%~dp0setup.exe" https://raw.githubusercontent.com/kblee0/win_res_kit/main/setup.exe
 echo "%~dp0setup.exe" /configure "%~dp0config_tmp.xml"
 pause
 )
 
-if  %menunum% EQU 92 (
-call :config_tmp
+if  %menunum% EQU 22 (
+call :config_tmp_2021
 type "%~dp0config_tmp.xml"
 IF NOT EXIST "%~dp0setup.exe" curl -o "%~dp0setup.exe" https://raw.githubusercontent.com/kblee0/win_res_kit/main/setup.exe
 echo "%~dp0setup.exe" /download "%~dp0config_tmp.xml"
+pause
+)
+
+if  %menunum% EQU 23 (
+call :config_tmp_365
+type "%~dp0config_tmp.xml"
+IF NOT EXIST "%~dp0setup.exe" curl -o "%~dp0setup.exe" https://raw.githubusercontent.com/kblee0/win_res_kit/main/setup.exe
+"%~dp0setup.exe" /configure "%~dp0config_tmp.xml"
+pause
+)
+
+if  %menunum% EQU 24 (
+call :config_tmp_365
+type "%~dp0config_tmp.xml"
+IF NOT EXIST "%~dp0setup.exe" curl -o "%~dp0setup.exe" https://raw.githubusercontent.com/kblee0/win_res_kit/main/setup.exe
+"%~dp0setup.exe" /download "%~dp0config_tmp.xml"
+pause
+)
+
+if  %menunum% EQU 25 (
+call :config_tmp_2024
+type "%~dp0config_tmp.xml"
+IF NOT EXIST "%~dp0setup.exe" curl -o "%~dp0setup.exe" https://raw.githubusercontent.com/kblee0/win_res_kit/main/setup.exe
+"%~dp0setup.exe" /configure "%~dp0config_tmp.xml"
+pause
+)
+
+if  %menunum% EQU 26 (
+call :config_tmp_2024
+type "%~dp0config_tmp.xml"
+IF NOT EXIST "%~dp0setup.exe" curl -o "%~dp0setup.exe" https://raw.githubusercontent.com/kblee0/win_res_kit/main/setup.exe
+"%~dp0setup.exe" /download "%~dp0config_tmp.xml"
 pause
 )
 
@@ -385,9 +431,22 @@ rem cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus
 pause
 )
 
+
+if  %menunum% EQU 96 (
+cd /d %ProgramFiles%\Microsoft Office\Office16
+
+for /f %%x in ('dir /b ..\root\Licenses16\proplusvl_kms*.xrm-ms') do cscript ospp.vbs /inslic:"..\root\Licenses16\%%x"
+
+cscript ospp.vbs /inpkey:XQNVK-8JYDB-WJ9W3-YJ8YR-WFG99
+rem cscript ospp.vbs /unpkey:BTDRB >nul
+rem cscript ospp.vbs /unpkey:KHGM9 >nul
+rem cscript ospp.vbs /unpkey:CPQVG >nul
+pause
+)
+
 goto :officemain
 
-:config_tmp
+:config_tmp_2021
 echo ^<Configuration^>>"%~dp0config_tmp.xml"
 echo   ^<Add OfficeClientEdition="64" Channel="PerpetualVL2021"^>>>"%~dp0config_tmp.xml"
 echo     ^<Product ID="ProPlus2021Volume" PIDKEY="FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH"^>>>"%~dp0config_tmp.xml"
@@ -400,7 +459,52 @@ if %OneNote%==X (echo        ^<ExcludeApp ID="OneNote" /^>>>"%~dp0config_tmp.xml
 if %Access%==X (echo        ^<ExcludeApp ID="Access" /^>>>"%~dp0config_tmp.xml")
 if %Publisher%==X (echo        ^<ExcludeApp ID="Publisher" /^>>>"%~dp0config_tmp.xml")
 if %OneDrive%==X (echo        ^<ExcludeApp ID="OneDrive" /^>>>"%~dp0config_tmp.xml")
+if %OneDrive%==X (echo        ^<ExcludeApp ID="Groove" /^>>>"%~dp0config_tmp.xml")
 if %Lync%==X (echo        ^<ExcludeApp ID="Lync" /^>>>"%~dp0config_tmp.xml")
+echo     ^</Product^>>>"%~dp0config_tmp.xml"
+echo   ^</Add^>>>"%~dp0config_tmp.xml"
+echo   ^<Remove All="True" /^>>>"%~dp0config_tmp.xml"
+echo ^</Configuration^>>>"%~dp0config_tmp.xml"
+goto:eof
+
+:config_tmp_365
+echo ^<Configuration^>>"%~dp0config_tmp.xml"
+echo   ^<Add OfficeClientEdition="64" Channel="Current"^>>>"%~dp0config_tmp.xml"
+echo     ^<Product ID="O365ProPlusRetail"^>>>"%~dp0config_tmp.xml"
+echo       ^<Language ID="ko-kr" /^>>>"%~dp0config_tmp.xml"
+if %Word%==X (echo        ^<ExcludeApp ID="Word" /^>>>"%~dp0config_tmp.xml")
+if %Excel%==X (echo        ^<ExcludeApp ID="Excel" /^>>>"%~dp0config_tmp.xml")
+if %PowerPoint%==X (echo        ^<ExcludeApp ID="PowerPoint" /^>>>"%~dp0config_tmp.xml")
+if %Outlook%==X (echo        ^<ExcludeApp ID="Outlook" /^>>>"%~dp0config_tmp.xml")
+if %OneNote%==X (echo        ^<ExcludeApp ID="OneNote" /^>>>"%~dp0config_tmp.xml")
+if %Access%==X (echo        ^<ExcludeApp ID="Access" /^>>>"%~dp0config_tmp.xml")
+if %Publisher%==X (echo        ^<ExcludeApp ID="Publisher" /^>>>"%~dp0config_tmp.xml")
+if %OneDrive%==X (echo        ^<ExcludeApp ID="OneDrive" /^>>>"%~dp0config_tmp.xml")
+if %OneDrive%==X (echo        ^<ExcludeApp ID="Groove" /^>>>"%~dp0config_tmp.xml")
+if %Lync%==X (echo        ^<ExcludeApp ID="Lync" /^>>>"%~dp0config_tmp.xml")
+if %Bing%==X (echo        ^<ExcludeApp ID="Bing" /^>>>"%~dp0config_tmp.xml")
+echo     ^</Product^>>>"%~dp0config_tmp.xml"
+echo   ^</Add^>>>"%~dp0config_tmp.xml"
+echo   ^<Remove All="True" /^>>>"%~dp0config_tmp.xml"
+echo ^</Configuration^>>>"%~dp0config_tmp.xml"
+goto:eof
+
+:config_tmp_2024
+echo ^<Configuration^>>"%~dp0config_tmp.xml"
+echo   ^<Add OfficeClientEdition="64" Channel="PerpetualVL2024"^>>>"%~dp0config_tmp.xml"
+echo     ^<Product ID="ProPlus2024Volume" PIDKEY="2TDPW-NDQ7G-FMG99-DXQ7M-TX3T2"^>>>"%~dp0config_tmp.xml"
+echo       ^<Language ID="ko-kr" /^>>>"%~dp0config_tmp.xml"
+if %Word%==X (echo        ^<ExcludeApp ID="Word" /^>>>"%~dp0config_tmp.xml")
+if %Excel%==X (echo        ^<ExcludeApp ID="Excel" /^>>>"%~dp0config_tmp.xml")
+if %PowerPoint%==X (echo        ^<ExcludeApp ID="PowerPoint" /^>>>"%~dp0config_tmp.xml")
+if %Outlook%==X (echo        ^<ExcludeApp ID="Outlook" /^>>>"%~dp0config_tmp.xml")
+if %OneNote%==X (echo        ^<ExcludeApp ID="OneNote" /^>>>"%~dp0config_tmp.xml")
+if %Access%==X (echo        ^<ExcludeApp ID="Access" /^>>>"%~dp0config_tmp.xml")
+if %Publisher%==X (echo        ^<ExcludeApp ID="Publisher" /^>>>"%~dp0config_tmp.xml")
+if %OneDrive%==X (echo        ^<ExcludeApp ID="OneDrive" /^>>>"%~dp0config_tmp.xml")
+if %OneDrive%==X (echo        ^<ExcludeApp ID="Groove" /^>>>"%~dp0config_tmp.xml")
+if %Lync%==X (echo        ^<ExcludeApp ID="Lync" /^>>>"%~dp0config_tmp.xml")
+if %Bing%==X (echo        ^<ExcludeApp ID="Bing" /^>>>"%~dp0config_tmp.xml")
 echo     ^</Product^>>>"%~dp0config_tmp.xml"
 echo   ^</Add^>>>"%~dp0config_tmp.xml"
 echo   ^<Remove All="True" /^>>>"%~dp0config_tmp.xml"
