@@ -302,7 +302,7 @@ echo 23. office uninstall
 echo.
 echo * Office License 및 PID 설정
 echo 31. Office 2016                     32. Office 2019
-echo 31. Office 2021                     32. Office 2024 Preview
+echo 33. Office 2021                     34. Office 2024 Preview
 echo.
 echo 41. KMS인증 (외부)                  42. KMS인증 (192.168.4.12)
 echo 43. 라이선스 정보 보기              44. 전체 License Key 제거
