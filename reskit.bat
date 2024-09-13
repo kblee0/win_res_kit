@@ -289,31 +289,28 @@ set Teams=X
 cls
 
 echo --------------------------------------------------------------------------
-echo.
 echo * 설치할 항목선택
-echo  1.  Word        [%Word%]
-echo  2.  Excel       [%Excel%]
-echo  3.  PowerPoint  [%PowerPoint%]
-echo  4.  Outlook     [%Outlook%]
-echo  5.  OneNote     [%OneNote%]
-echo  6.  Access      [%Access%]
-echo  7.  Publisher   [%Publisher%]
-echo  8.  OneDrive    [%OneDrive%]
-echo  9.  Lync        [%Lync%]
-echo 10.  Teams       [%Teams%]
+echo  1.  Word        [%Word%]                 2.  Excel       [%Excel%]
+echo  3.  PowerPoint  [%PowerPoint%]                 4.  Outlook     [%Outlook%]
+echo  5.  OneNote     [%OneNote%]                 6.  Access      [%Access%]
+echo  7.  Publisher   [%Publisher%]                 8.  OneDrive    [%OneDrive%]
+echo  9.  Lync        [%Lync%]                10.  Teams       [%Teams%]
 echo 11.  Bing (2024) [%Bing%]
 echo.
-echo 21. 2021 Install                    22. 2021 Download
-echo 23. 365  Install                    24. 365 Download
-echo 25. 2024 Install                    26. 2024 Download
+echo 21. Office Install                  22. Office Download
+echo 23. office uninstall
 echo.
-echo 93. Excel 기본글꼴(본문 글꼴,9)
+echo * Office License 및 PID 설정
+echo 31. Office 2016                     32. Office 2019
+echo 31. Office 2021                     32. Office 2024 Preview
 echo.
-echo 94. Office KMS인증 (외부)           95. Office KMS인증(192.168.4.12)
-echo 96. Office 365 Volume전환
+echo 41. KMS인증 (외부)                  42. KMS인증 (192.168.4.12)
+echo 43. 라이선스 정보 보기              44. 전체 License Key 제거
+echo.
+echo * Office 기타 설정
+echo 51. Excel 기본글꼴(본문 글꼴,9)
 echo.
 echo  0. return Main
-echo.
 echo --------------------------------------------------------------------------
 set /p menunum="설치항목을 선택하세요: "
 
@@ -354,120 +351,127 @@ if  %menunum% EQU 11 (
 )
 
 if  %menunum% EQU 21 (
-call :config_tmp_2021
+call :config_tmp_install
 type "%~dp0config_tmp.xml"
+pause
 IF NOT EXIST "%~dp0setup.exe" curl -o "%~dp0setup.exe" https://raw.githubusercontent.com/kblee0/win_res_kit/main/setup.exe
-echo "%~dp0setup.exe" /configure "%~dp0config_tmp.xml"
+"%~dp0setup.exe" /configure "%~dp0config_tmp.xml"
 pause
 )
 
 if  %menunum% EQU 22 (
-call :config_tmp_2021
+call :config_tmp_install
 type "%~dp0config_tmp.xml"
 IF NOT EXIST "%~dp0setup.exe" curl -o "%~dp0setup.exe" https://raw.githubusercontent.com/kblee0/win_res_kit/main/setup.exe
-echo "%~dp0setup.exe" /download "%~dp0config_tmp.xml"
+"%~dp0setup.exe" /download "%~dp0config_tmp.xml"
 pause
 )
 
 if  %menunum% EQU 23 (
-call :config_tmp_365
-type "%~dp0config_tmp.xml"
-IF NOT EXIST "%~dp0setup.exe" curl -o "%~dp0setup.exe" https://raw.githubusercontent.com/kblee0/win_res_kit/main/setup.exe
-"%~dp0setup.exe" /configure "%~dp0config_tmp.xml"
+call :config_tmp_uninstall
+type "%~dp0uninstall.xml"
+pause
+"%~dp0setup.exe" /configure "%~dp0uninstall.xml"
 pause
 )
 
-if  %menunum% EQU 24 (
-call :config_tmp_365
-type "%~dp0config_tmp.xml"
-IF NOT EXIST "%~dp0setup.exe" curl -o "%~dp0setup.exe" https://raw.githubusercontent.com/kblee0/win_res_kit/main/setup.exe
-"%~dp0setup.exe" /download "%~dp0config_tmp.xml"
-pause
-)
+if  %menunum% EQU 31 (
+rem office 2016
+pushd %ProgramFiles%\Microsoft Office\Office16
 
-if  %menunum% EQU 25 (
-call :config_tmp_2024
-type "%~dp0config_tmp.xml"
-IF NOT EXIST "%~dp0setup.exe" curl -o "%~dp0setup.exe" https://raw.githubusercontent.com/kblee0/win_res_kit/main/setup.exe
-"%~dp0setup.exe" /configure "%~dp0config_tmp.xml"
-pause
-)
-
-if  %menunum% EQU 26 (
-call :config_tmp_2024
-type "%~dp0config_tmp.xml"
-IF NOT EXIST "%~dp0setup.exe" curl -o "%~dp0setup.exe" https://raw.githubusercontent.com/kblee0/win_res_kit/main/setup.exe
-"%~dp0setup.exe" /download "%~dp0config_tmp.xml"
-pause
-)
-
-if  %menunum% EQU 93 (
-Reg.exe add "HKCU\Software\Microsoft\Office\16.0\Excel\Options" /v "Font" /t REG_SZ /d "본문 글꼴,9" /f
-pause
-)
-
-if  %menunum% EQU 94 (
-set office2021_act_status=1
-cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /inpkey:FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
-
-call :office2021_act kms.digiboy.ir
-call :office2021_act hq1.chinancce.com
-call :office2021_act kms.cnlic.com
-call :office2021_act kms.chinancce.com
-call :office2021_act kms.digiboy.ir
-
-rem cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus
-
-pause
-)
-
-if  %menunum% EQU 95 (
-set office2021_act_status=1
-cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /inpkey:FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
-
-call :office2021_act 192.168.4.12
-rem cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus
-
-pause
-)
-
-
-if  %menunum% EQU 96 (
-cd /d %ProgramFiles%\Microsoft Office\Office16
-
-for /f %%x in ('dir /b ..\root\Licenses16\proplusvl_kms*.xrm-ms') do cscript ospp.vbs /inslic:"..\root\Licenses16\%%x"
+for /f %%x in ('dir /b ..\root\Licenses16\ProPlusVL_KMS*.xrm-ms') do cscript ospp.vbs /inslic:"..\root\Licenses16\%%x"
 
 cscript ospp.vbs /inpkey:XQNVK-8JYDB-WJ9W3-YJ8YR-WFG99
-rem cscript ospp.vbs /unpkey:BTDRB >nul
-rem cscript ospp.vbs /unpkey:KHGM9 >nul
-rem cscript ospp.vbs /unpkey:CPQVG >nul
+
+popd
+pause
+)
+
+if  %menunum% EQU 32 (
+rem office 2019
+pushd %ProgramFiles%\Microsoft Office\Office16
+
+for /f %%x in ('dir /b ..\root\Licenses16\ProPlus2019VL_KMS*.xrm-ms') do cscript ospp.vbs /inslic:"..\root\Licenses16\%%x"
+
+cscript ospp.vbs /inpkey:NMMKJ-6RK4F-KMJVX-8D9MJ-6MWKP
+
+popd
+pause
+)
+
+if  %menunum% EQU 33 (
+rem office 2021
+pushd %ProgramFiles%\Microsoft Office\Office16
+
+for /f %%x in ('dir /b ..\root\Licenses16\ProPlus2021VL_KMS*.xrm-ms') do cscript ospp.vbs /inslic:"..\root\Licenses16\%%x"
+
+cscript ospp.vbs /inpkey:FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
+
+popd
+pause
+)
+
+if  %menunum% EQU 34 (
+rem office 2024 Preview
+pushd %ProgramFiles%\Microsoft Office\Office16
+
+for /f %%x in ('dir /b dir /b ..\root\Licenses16\ProPlus2024PreviewVL_KMS*.xrm-ms') do cscript ospp.vbs /inslic:"..\root\Licenses16\%%x"
+
+cscript ospp.vbs /inpkey:2TDPW-NDQ7G-FMG99-DXQ7M-TX3T2
+
+popd
+pause
+)
+
+
+if  %menunum% EQU 41 (
+set office_act_status=1
+cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /inpkey:FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
+
+call :office_activate kms.digiboy.ir
+call :office_activate hq1.chinancce.com
+call :office_activate kms.cnlic.com
+call :office_activate kms.chinancce.com
+call :office_activate kms.digiboy.ir
+
+rem cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus
+
+pause
+)
+
+if  %menunum% EQU 42 (
+set office_act_status=1
+cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /inpkey:FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
+
+call :office_activate 192.168.4.12
+rem cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus
+
+pause
+)
+
+if  %menunum% EQU 43 (
+cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus
+
+pause
+)
+
+if  %menunum% EQU 44 (
+for /f "tokens=8 usebackq" %%x in (`cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus ^| findstr "installed product key:"`) do (
+	echo unpkey : %%x
+	cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /unpkey:%%x
+)
+
+pause
+)
+
+if  %menunum% EQU 51 (
+Reg.exe add "HKCU\Software\Microsoft\Office\16.0\Excel\Options" /v "Font" /t REG_SZ /d "본문 글꼴,9" /f
 pause
 )
 
 goto :officemain
 
-:config_tmp_2021
-echo ^<Configuration^>>"%~dp0config_tmp.xml"
-echo   ^<Add OfficeClientEdition="64" Channel="PerpetualVL2021"^>>>"%~dp0config_tmp.xml"
-echo     ^<Product ID="ProPlus2021Volume" PIDKEY="FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH"^>>>"%~dp0config_tmp.xml"
-echo       ^<Language ID="ko-kr" /^>>>"%~dp0config_tmp.xml"
-if %Word%==X (echo        ^<ExcludeApp ID="Word" /^>>>"%~dp0config_tmp.xml")
-if %Excel%==X (echo        ^<ExcludeApp ID="Excel" /^>>>"%~dp0config_tmp.xml")
-if %PowerPoint%==X (echo        ^<ExcludeApp ID="PowerPoint" /^>>>"%~dp0config_tmp.xml")
-if %Outlook%==X (echo        ^<ExcludeApp ID="Outlook" /^>>>"%~dp0config_tmp.xml")
-if %OneNote%==X (echo        ^<ExcludeApp ID="OneNote" /^>>>"%~dp0config_tmp.xml")
-if %Access%==X (echo        ^<ExcludeApp ID="Access" /^>>>"%~dp0config_tmp.xml")
-if %Publisher%==X (echo        ^<ExcludeApp ID="Publisher" /^>>>"%~dp0config_tmp.xml")
-if %OneDrive%==X (echo        ^<ExcludeApp ID="OneDrive" /^>>>"%~dp0config_tmp.xml")
-if %OneDrive%==X (echo        ^<ExcludeApp ID="Groove" /^>>>"%~dp0config_tmp.xml")
-if %Lync%==X (echo        ^<ExcludeApp ID="Lync" /^>>>"%~dp0config_tmp.xml")
-echo     ^</Product^>>>"%~dp0config_tmp.xml"
-echo   ^</Add^>>>"%~dp0config_tmp.xml"
-echo   ^<Remove All="True" /^>>>"%~dp0config_tmp.xml"
-echo ^</Configuration^>>>"%~dp0config_tmp.xml"
-goto:eof
-
-:config_tmp_365
+:config_tmp_install
 echo ^<Configuration^>>"%~dp0config_tmp.xml"
 echo   ^<Add OfficeClientEdition="64" Channel="Current"^>>>"%~dp0config_tmp.xml"
 echo     ^<Product ID="O365ProPlusRetail"^>>>"%~dp0config_tmp.xml"
@@ -481,38 +485,27 @@ if %Access%==X (echo        ^<ExcludeApp ID="Access" /^>>>"%~dp0config_tmp.xml")
 if %Publisher%==X (echo        ^<ExcludeApp ID="Publisher" /^>>>"%~dp0config_tmp.xml")
 if %OneDrive%==X (echo        ^<ExcludeApp ID="OneDrive" /^>>>"%~dp0config_tmp.xml")
 if %OneDrive%==X (echo        ^<ExcludeApp ID="Groove" /^>>>"%~dp0config_tmp.xml")
+if %Teams%==X (echo        ^<ExcludeApp ID="Teams" /^>>>"%~dp0config_tmp.xml")
 if %Lync%==X (echo        ^<ExcludeApp ID="Lync" /^>>>"%~dp0config_tmp.xml")
 if %Bing%==X (echo        ^<ExcludeApp ID="Bing" /^>>>"%~dp0config_tmp.xml")
 echo     ^</Product^>>>"%~dp0config_tmp.xml"
-echo   ^</Add^>>>"%~dp0config_tmp.xml"
-echo   ^<Remove All="True" /^>>>"%~dp0config_tmp.xml"
-echo ^</Configuration^>>>"%~dp0config_tmp.xml"
-goto:eof
-
-:config_tmp_2024
-echo ^<Configuration^>>"%~dp0config_tmp.xml"
-echo   ^<Add OfficeClientEdition="64" Channel="PerpetualVL2024"^>>>"%~dp0config_tmp.xml"
-echo     ^<Product ID="ProPlus2024Volume" PIDKEY="2TDPW-NDQ7G-FMG99-DXQ7M-TX3T2"^>>>"%~dp0config_tmp.xml"
+echo     ^<Product ID="ProofingTools"^>>>"%~dp0config_tmp.xml"
 echo       ^<Language ID="ko-kr" /^>>>"%~dp0config_tmp.xml"
-if %Word%==X (echo        ^<ExcludeApp ID="Word" /^>>>"%~dp0config_tmp.xml")
-if %Excel%==X (echo        ^<ExcludeApp ID="Excel" /^>>>"%~dp0config_tmp.xml")
-if %PowerPoint%==X (echo        ^<ExcludeApp ID="PowerPoint" /^>>>"%~dp0config_tmp.xml")
-if %Outlook%==X (echo        ^<ExcludeApp ID="Outlook" /^>>>"%~dp0config_tmp.xml")
-if %OneNote%==X (echo        ^<ExcludeApp ID="OneNote" /^>>>"%~dp0config_tmp.xml")
-if %Access%==X (echo        ^<ExcludeApp ID="Access" /^>>>"%~dp0config_tmp.xml")
-if %Publisher%==X (echo        ^<ExcludeApp ID="Publisher" /^>>>"%~dp0config_tmp.xml")
-if %OneDrive%==X (echo        ^<ExcludeApp ID="OneDrive" /^>>>"%~dp0config_tmp.xml")
-if %OneDrive%==X (echo        ^<ExcludeApp ID="Groove" /^>>>"%~dp0config_tmp.xml")
-if %Lync%==X (echo        ^<ExcludeApp ID="Lync" /^>>>"%~dp0config_tmp.xml")
-if %Bing%==X (echo        ^<ExcludeApp ID="Bing" /^>>>"%~dp0config_tmp.xml")
 echo     ^</Product^>>>"%~dp0config_tmp.xml"
 echo   ^</Add^>>>"%~dp0config_tmp.xml"
-echo   ^<Remove All="True" /^>>>"%~dp0config_tmp.xml"
+echo   ^<Display Level="Full" AcceptEULA="TRUE" /^>>>"%~dp0config_tmp.xml"
+echo   ^<Updates Enabled="TRUE" /^>>>"%~dp0config_tmp.xml"
 echo ^</Configuration^>>>"%~dp0config_tmp.xml"
 goto:eof
 
-:office2021_act
-if %office2021_act_status%==0 goto:eof
+:config_tmp_uninstall
+echo ^<Configuration^>>"%~dp0uninstall.xml"
+echo   ^<Remove All="TRUE" /^>>>"%~dp0uninstall.xml"
+echo ^</Configuration^>>>"%~dp0uninstall.xml"
+goto:eof
+
+:office_activate
+if %office_act_status%==0 goto:eof
 echo.
 echo.
 echo.
@@ -520,14 +513,11 @@ echo ---------------------------------------
 echo Activation with %1 ...
 echo ---------------------------------------
 echo.
-if %office2021_act_status%==0 goto:eof
 
 cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /sethst:%1
-cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /act > "%~dp0act_tmp.log"
-type "%~dp0act_tmp.log"
-findstr successful "%~dp0act_tmp.log"
-set office2021_act_status=%errorlevel%
-del "%~dp0act_tmp.log"
+for /f "usebackq" %%x in (`cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /act ^| findstr "successful"`) do (
+	set office_act_status=0
+)
 
 goto:eof
 
