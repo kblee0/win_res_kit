@@ -302,7 +302,7 @@ echo 23. office uninstall
 echo.
 echo * Office License 및 PID 설정
 echo 31. Office 2016                     32. Office 2019
-echo 33. Office 2021                     34. Office 2024 Preview
+echo 33. Office 2021                     34. Office 2024
 echo.
 echo 41. KMS인증 (외부)                  42. KMS인증 (192.168.4.12)
 echo 43. 라이선스 정보 보기              44. 전체 License Key 제거
@@ -415,9 +415,9 @@ if  %menunum% EQU 34 (
 rem office 2024 Preview
 pushd %ProgramFiles%\Microsoft Office\Office16
 
-for /f %%x in ('dir /b dir /b ..\root\Licenses16\ProPlus2024PreviewVL_KMS*.xrm-ms') do cscript ospp.vbs /inslic:"..\root\Licenses16\%%x"
+for /f %%x in ('dir /b dir /b ..\root\Licenses16\ProPlus2024VL_KMS*.xrm-ms') do cscript ospp.vbs /inslic:"..\root\Licenses16\%%x"
 
-cscript ospp.vbs /inpkey:2TDPW-NDQ7G-FMG99-DXQ7M-TX3T2
+cscript ospp.vbs /inpkey:XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB
 
 popd
 pause
