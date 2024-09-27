@@ -114,11 +114,8 @@ goto:eof
 set /p hostname="HOSTNAME: "
 set /p workgroup="WORKGROUP: "
 
-rem Reg.exe add HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters /v Hostname /t REG_SZ /d %hostname%
-rem Reg.exe add HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters /v "NV Hostname" /t REG_SZ /d %hostname%
-rem Reg.exe add HKLM\SYSTEM\CurrentControlSet\Control\ComputerName\ComputerName /v ComputerName /t REG_SZ /d %hostname%
-wmic ComputerSystem Where Name="%COMPUTERNAME%" Call Rename Name="%hostname%"
-wmic computersystem where name="%computername%" call joindomainorworkgroup name="%workgroup%"
+powershell -c "Add-Computer -WorkGroupName %workgroup%"
+powershell -c "Rename-Computer -NewName %hostname%"
 
 pause
 goto:eof
