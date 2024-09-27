@@ -155,6 +155,13 @@ powershell -Command "Get-AppxPackage -AllUsers Microsoft.ZuneMusic              
 powershell -Command "Get-AppxPackage -AllUsers Microsoft.ZuneVideo                    | Remove-AppxPackage"
 powershell -Command "Get-AppxPackage -AllUsers MicrosoftCorporationII.QuickAssist     | Remove-AppxPackage"
 powershell -Command "Get-AppxPackage -AllUsers microsoft.windowscommunicationsapps    | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.OutlookForWindows            | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers MicrosoftCorporationII.MicrosoftFamily | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers MSTeams                                | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.Copilot                      | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.BingNews                     | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.BingSearch                   | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.BingWeather                  | Remove-AppxPackage"
 
 REM Microsoft.WindowsMaps
 REM sc delete MapsBroker
@@ -304,7 +311,7 @@ echo * Office License 및 PID 설정
 echo 31. Office 2016                     32. Office 2019
 echo 33. Office 2021                     34. Office 2024
 echo.
-echo 41. KMS인증 (외부)                  42. KMS인증 (192.168.4.12)
+echo 41. KMS인증 (외부)                  42. KMS인증 (사용자 지정)
 echo 43. 라이선스 정보 보기              44. 전체 License Key 제거
 echo.
 echo * Office 기타 설정
@@ -426,7 +433,6 @@ pause
 
 if  %menunum% EQU 41 (
 set office_act_status=1
-cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /inpkey:FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
 
 call :office_activate kms.digiboy.ir
 call :office_activate hq1.chinancce.com
@@ -441,9 +447,10 @@ pause
 
 if  %menunum% EQU 42 (
 set office_act_status=1
-cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /inpkey:FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
 
-call :office_activate 192.168.4.12
+set /p kmshost="KMS server host name or ip: "
+
+call :office_activate %kmshost%
 rem cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus
 
 pause
