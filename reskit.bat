@@ -15,10 +15,8 @@ echo  4. 위젯 비활성화 (11)             5. CoPilot 비활성화 (11)
 echo  6. 백그라운드앱 중지              7. Explorer 기본설정
 echo  8. Hostname/Workgroup 변경        9. 예약된 저장소 삭제
 echo 10. Windows App 삭제              11. TEMP 변경
-echo 12. 기본 임시디렉토리 오픈        13. PC시간을 UTC 로설정
-echo.
-echo * 인증
-echo 14. Winrar 등록
+echo 12. cmd process 설정(autorun.cmd) 13. 기본 임시디렉토리 오픈
+echo 14. PC시간을 UTC 로설정
 echo.
 echo * 기타
 echo 15. 드라이브백업                  16. 드라이브복원
@@ -197,8 +195,20 @@ setx TMP "%tmpdir%" /m
 pause
 goto:eof
 
-
 :menu_12
+Reg.exe add "HKLM\SOFTWARE\Microsoft\Command Processor" /v "AutoRun" /t REG_SZ /d "C:\home\autorun.cmd" /f
+IF NOT EXIST C:\home\autorun.cmd (
+	echo @echo off > C:\home\autorun.cmd
+	echo doskey ls=dir $* >> C:\home\autorun.cmd
+	echo doskey sudo=c:\usr\bin\gsudo.exe $* >> C:\home\autorun.cmd
+	echo @echo on >> C:\home\autorun.cmd
+)
+
+pause
+goto:eof
+
+
+:menu_13
 start %SystemRoot%\TEMP
 start %USERPROFILE%\AppData\Local\Temp
 
@@ -206,25 +216,9 @@ pause
 goto:eof
 
 
-:menu_13
+:menu_14
 echo PC시간을 UTC 로설정
 Reg.exe add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation" /v RealTimeIsUniversal /t REG_DWORD /d "1" /f
-
-pause
-goto:eof
-
-:menu_14
-echo RAR registration data> "C:\Program Files\WinRAR\rarreg.key"
-echo kblee>> "C:\Program Files\WinRAR\rarreg.key"
-echo Unlimited Company License>> "C:\Program Files\WinRAR\rarreg.key"
-echo UID=89cbb27a846039061a44>> "C:\Program Files\WinRAR\rarreg.key"
-echo 64122122501a44f42db886bb2c8d0bbaba51eee2ac9ba645de63bb>> "C:\Program Files\WinRAR\rarreg.key"
-echo ef95732537ed91e7ec9560fce6cb5ffde62890079861be57638717>> "C:\Program Files\WinRAR\rarreg.key"
-echo 7131ced835ed65cc743d9777f2ea71a8e32c7e593cf66794343565>> "C:\Program Files\WinRAR\rarreg.key"
-echo b41bcf56929486b8bcdac33d50ecf7739960b166059e5e00cb657d>> "C:\Program Files\WinRAR\rarreg.key"
-echo eea1c61312f3e2cd59f8dcffe751fb4bf92cb262336c0eba3de94b>> "C:\Program Files\WinRAR\rarreg.key"
-echo 6d71153fcdb61854710408ecbfc09128102d8c01965df10460128a>> "C:\Program Files\WinRAR\rarreg.key"
-echo | set /p dummy="e4b7d9da370464fc59e53824f71b2d54307b6e18a0e81324258262">> "C:\Program Files\WinRAR\rarreg.key"
 
 pause
 goto:eof
@@ -509,6 +503,7 @@ echo ^</Configuration^>>>"%~dp0uninstall.xml"
 goto:eof
 
 :office_activate
+
 if %office_act_status%==0 goto:eof
 echo.
 echo.
