@@ -26,18 +26,19 @@ echo * Office
 echo 20. MS Office
 echo --------------------------------------------------------------------------
 echo.
+set menunum=
 set /p menunum="기능을 선택하세요: "
 
 If 0%menunum% EQU 0 Exit /B
 
-call :menu_%menunum%
+call :mainmenu_%menunum%
 goto :main
 
-:menu_99
+:mainmenu_99
 shutdown /r /t 0
-goto :main
+goto:eof
 
-:menu_1
+:mainmenu_1
 echo 키보드 속도 빠르게 설정
 Reg.exe add "HKCU\Control Panel\Keyboard" /v "InitialKeyboardIndicators" /t REG_SZ /d "2" /f
 Reg.exe add "HKCU\Control Panel\Keyboard" /v "KeyboardDelay" /t REG_SZ /d "0" /f
@@ -46,7 +47,7 @@ Reg.exe add "HKCU\Control Panel\Keyboard" /v "KeyboardSpeed" /t REG_SZ /d "31" /
 pause
 goto:eof
 
-:menu_2
+:mainmenu_2
 echo 한영전환 Shift-Space, 한글 동시지원
 Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Services\i8042prt\Parameters" /v "LayerDriver KOR" /t REG_SZ /d "kbd101c.dll" /f
 Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Services\i8042prt\Parameters" /v "OverrideKeyboardIdentifier" /t REG_SZ /d "PCAT_101CKEY" /f
@@ -57,7 +58,7 @@ Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\Keyboard Layout" /v "Scancode
 pause
 goto:eof
 
-:menu_3
+:mainmenu_3
 echo 다운로드 Savezone 비활성화
 REM ; 다운로드하는 파일의 보안 정보 저장
 REM ; 0이면 저장, 1이면 저장 안 함.
@@ -67,28 +68,28 @@ Reg.exe add "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments
 pause
 goto:eof
 
-:menu_4
+:mainmenu_4
 echo 위젯 비활성화
 Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Dsh" /v "AllowNewsAndInterests" /t REG_DWORD /d "0" /f
 
 pause
 goto:eof
 
-:menu_5
+:mainmenu_5
 echo CoPilot 비활성화
 Reg.exe add "HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot" /v "TurnOffWindowsCopilot" /t REG_DWORD /d "1" /f
 
 pause
 goto:eof
 
-:menu_6
+:mainmenu_6
 echo 백그라운드앱 중지
 Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" /v "LetAppsRuninBackgroud" /t REG_DWORD /d "2" /f
 
 pause
 goto:eof
 
-:menu_7
+:mainmenu_7
 echo Explorer 기본설정
 Reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "LaunchTo" /t REG_DWORD /d "1" /f
 Reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "NavPaneShowAllFolders" /t REG_DWORD /d "1" /f
@@ -108,7 +109,7 @@ explorer.exe
 pause
 goto:eof
 
-:menu_8
+:mainmenu_8
 set /p hostname="HOSTNAME: "
 set /p workgroup="WORKGROUP: "
 
@@ -118,13 +119,13 @@ powershell -c "Rename-Computer -NewName %hostname%"
 pause
 goto:eof
 
-:menu_9
+:mainmenu_9
 DISM.exe /Online /Set-ReservedStorageState /State:Disabled
 
 pause
 goto:eof
 
-:menu_10
+:mainmenu_10
 powershell -Command "Get-AppxPackage -AllUsers Clipchamp.Clipchamp                    | Remove-AppxPackage"
 powershell -Command "Get-AppxPackage -AllUsers Microsoft.549981C3F5F10                | Remove-AppxPackage"
 powershell -Command "Get-AppxPackage -AllUsers Microsoft.BingNews                     | Remove-AppxPackage"
@@ -184,7 +185,7 @@ REM reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR" /v AllowGameDVR /
 pause
 goto:eof
 
-:menu_11
+:mainmenu_11
 set /p tmpdir="디렉토리: "
 IF NOT EXIST "%tmpdir%" mkdir "%tmpdir%"
 Reg.exe DELETE HKCU\Environment /v TEMP /f
@@ -195,7 +196,7 @@ setx TMP "%tmpdir%" /m
 pause
 goto:eof
 
-:menu_12
+:mainmenu_12
 Reg.exe add "HKLM\SOFTWARE\Microsoft\Command Processor" /v "AutoRun" /t REG_SZ /d "C:\home\autorun.cmd" /f
 IF NOT EXIST C:\home\autorun.cmd (
 	echo @echo off > C:\home\autorun.cmd
@@ -208,7 +209,7 @@ pause
 goto:eof
 
 
-:menu_13
+:mainmenu_13
 start %SystemRoot%\TEMP
 start %USERPROFILE%\AppData\Local\Temp
 
@@ -216,14 +217,14 @@ pause
 goto:eof
 
 
-:menu_14
+:mainmenu_14
 echo PC시간을 UTC 로설정
 Reg.exe add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation" /v RealTimeIsUniversal /t REG_DWORD /d "1" /f
 
 pause
 goto:eof
 
-:menu_15
+:mainmenu_15
 set /p DRVDIR="디렉토리: "
 IF NOT EXIST "%DRVDIR%" mkdir "%DRVDIR%"
 Dism.exe /Online /Export-Driver "/Destination:%DRVDIR%"
@@ -231,7 +232,7 @@ Dism.exe /Online /Export-Driver "/Destination:%DRVDIR%"
 pause
 goto:eof
 
-:menu_16
+:mainmenu_16
 set /p DRVDIR="디렉토리: "
 pnputil.exe /add-driver "%DRVDIR%\*.inf" /subdirs /install
 start devmgmt.msc
@@ -239,7 +240,7 @@ start devmgmt.msc
 pause
 goto:eof
 
-:menu_17
+:mainmenu_17
 Reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v "BypassTPMCheck" /t REG_DWORD /d "1" /f
 Reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v "BypassSecureBootCheck" /t REG_DWORD /d "1" /f
 Reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v "BypassRAMCheck" /t REG_DWORD /d "1" /f
@@ -249,14 +250,14 @@ Reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v "BypassCPUCheck" /t REG_DWORD /d "1
 pause
 goto:eof
 
-:menu_18
+:mainmenu_18
 Reg.exe add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OOBE /v BypassNRO /t REG_DWORD /d 1 /f
 
 pause
 goto:eof
 
-:menu_20
-call :officemenu
+:mainmenu_20
+goto :officemenu
 
 goto:eof
 
@@ -310,70 +311,89 @@ echo 51. Excel 기본글꼴(본문 글꼴,9)
 echo.
 echo  0. return Main
 echo --------------------------------------------------------------------------
+set menunum=
 set /p menunum="설치항목을 선택하세요: "
 
-If 0%menunum% EQU 0 Exit /B
+If 0%menunum% EQU 0 goto :main
 
-if  %menunum% EQU 1 (
-	if %Word%==O (set Word=X) Else (set Word=O)
-)
-if  %menunum% EQU 2 (
-	if %Excel%==O (set Excel=X) Else (set Excel=O)
-)
-if  %menunum% EQU 3 (
-	if %PowerPoint%==O (set PowerPoint=X) Else (set PowerPoint=O)
-)
-if  %menunum% EQU 4 (
-	if %Outlook%==O (set Outlook=X) Else (set Outlook=O)
-)
-if  %menunum% EQU 5 (
-	if %OneNote%==O (set OneNote=X) Else (set OneNote=O)
-)
-if  %menunum% EQU 6 (
-	if %Access%==O (set Access=X) Else (set Access=O)
-)
-if  %menunum% EQU 7 (
-	if %Publisher%==O (set Publisher=X) Else (set Publisher=O)
-)
-if  %menunum% EQU 8 (
-	if %OneDrive%==O (set OneDrive=X) Else (set OneDrive=O)
-)
-if  %menunum% EQU 9 (
-	if %Lync%==O (set Lync=X) Else (set Lync=O)
-)
-if  %menunum% EQU 10 (
-	if %Teams%==O (set Teams=X) Else (set Teams=O)
-)
-if  %menunum% EQU 11 (
-	if %Bing%==O (set Bing=X) Else (set Bing=O)
-)
+call :officemenu_%menunum%
+goto :officemain
 
-if  %menunum% EQU 21 (
+
+:officemenu_1
+if %Word%==O (set Word=X) Else (set Word=O)
+goto:eof
+
+:officemenu_2
+if %Excel%==O (set Excel=X) Else (set Excel=O)
+goto:eof
+
+:officemenu_3
+if %PowerPoint%==O (set PowerPoint=X) Else (set PowerPoint=O)
+goto:eof
+
+:officemenu_4
+if %Outlook%==O (set Outlook=X) Else (set Outlook=O)
+goto:eof
+
+:officemenu_5
+if %OneNote%==O (set OneNote=X) Else (set OneNote=O)
+goto:eof
+
+:officemenu_6
+if %Access%==O (set Access=X) Else (set Access=O)
+goto:eof
+
+:officemenu_7
+if %Publisher%==O (set Publisher=X) Else (set Publisher=O)
+goto:eof
+
+:officemenu_8
+if %OneDrive%==O (set OneDrive=X) Else (set OneDrive=O)
+goto:eof
+
+:officemenu_9
+if %Lync%==O (set Lync=X) Else (set Lync=O)
+goto:eof
+
+:officemenu_10
+if %Teams%==O (set Teams=X) Else (set Teams=O)
+goto:eof
+
+:officemenu_11
+if %Bing%==O (set Bing=X) Else (set Bing=O)
+goto:eof
+
+
+:officemenu_21
 call :config_tmp_install
 type "%~dp0config_tmp.xml"
 pause
 IF NOT EXIST "%~dp0setup.exe" curl -o "%~dp0setup.exe" https://raw.githubusercontent.com/kblee0/win_res_kit/main/setup.exe
 "%~dp0setup.exe" /configure "%~dp0config_tmp.xml"
 pause
-)
+goto:eof
 
-if  %menunum% EQU 22 (
+
+:officemenu_22
 call :config_tmp_install
 type "%~dp0config_tmp.xml"
 IF NOT EXIST "%~dp0setup.exe" curl -o "%~dp0setup.exe" https://raw.githubusercontent.com/kblee0/win_res_kit/main/setup.exe
 "%~dp0setup.exe" /download "%~dp0config_tmp.xml"
 pause
-)
+goto:eof
 
-if  %menunum% EQU 23 (
+
+:officemenu_23
 call :config_tmp_uninstall
 type "%~dp0uninstall.xml"
 pause
 "%~dp0setup.exe" /configure "%~dp0uninstall.xml"
 pause
-)
+goto:eof
 
-if  %menunum% EQU 31 (
+
+:officemenu_31
 rem office 2016
 pushd %ProgramFiles%\Microsoft Office\Office16
 
@@ -383,9 +403,10 @@ cscript ospp.vbs /inpkey:XQNVK-8JYDB-WJ9W3-YJ8YR-WFG99
 
 popd
 pause
-)
+goto:eof
 
-if  %menunum% EQU 32 (
+
+:officemenu_32
 rem office 2019
 pushd %ProgramFiles%\Microsoft Office\Office16
 
@@ -395,9 +416,10 @@ cscript ospp.vbs /inpkey:NMMKJ-6RK4F-KMJVX-8D9MJ-6MWKP
 
 popd
 pause
-)
+goto:eof
 
-if  %menunum% EQU 33 (
+
+:officemenu_33
 rem office 2021
 pushd %ProgramFiles%\Microsoft Office\Office16
 
@@ -407,9 +429,10 @@ cscript ospp.vbs /inpkey:FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
 
 popd
 pause
-)
+goto:eof
 
-if  %menunum% EQU 34 (
+
+:officemenu_34
 rem office 2024 Preview
 pushd %ProgramFiles%\Microsoft Office\Office16
 
@@ -419,10 +442,11 @@ cscript ospp.vbs /inpkey:XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB
 
 popd
 pause
-)
+goto:eof
 
 
-if  %menunum% EQU 41 (
+
+:officemenu_41
 set office_act_status=1
 
 call :office_activate kms.digiboy.ir
@@ -434,38 +458,44 @@ call :office_activate kms.digiboy.ir
 rem cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus
 
 pause
-)
+goto:eof
 
-if  %menunum% EQU 42 (
+
+:officemenu_42
 set office_act_status=1
+set kmshost=
 
-set /p kmshost="KMS server host name or ip: "
+set /p kmshost=KMS server host name or ip: 
 
 call :office_activate %kmshost%
 rem cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus
 
 pause
-)
+goto:eof
 
-if  %menunum% EQU 43 (
+
+:officemenu_43
 cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus
 
 pause
-)
+goto:eof
 
-if  %menunum% EQU 44 (
+
+:officemenu_44
 for /f "tokens=8 usebackq" %%x in (`cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus ^| findstr "installed product key:"`) do (
 	echo unpkey : %%x
 	cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /unpkey:%%x
 )
 
 pause
-)
+goto:eof
 
-if  %menunum% EQU 51 (
+
+:officemenu_51
 Reg.exe add "HKCU\Software\Microsoft\Office\16.0\Excel\Options" /v "Font" /t REG_SZ /d "본문 글꼴,9" /f
 pause
-)
+goto:eof
+
 
 goto :officemain
 
