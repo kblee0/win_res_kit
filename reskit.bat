@@ -21,6 +21,7 @@ echo.
 echo * 기타
 echo 15. 드라이브백업                  16. 드라이브복원
 echo 17. Win11 Setup check bypass      18. 인터넷 연결없이 설치
+echo 19. 업데이트 백업파일 제거
 echo.
 echo * Office
 echo 20. MS Office
@@ -252,6 +253,13 @@ goto:eof
 
 :mainmenu_18
 Reg.exe add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OOBE /v BypassNRO /t REG_DWORD /d 1 /f
+
+pause
+goto:eof
+
+
+:mainmenu_19
+dism /online /Cleanup-Image /StartComponentCleanup /ResetBase
 
 pause
 goto:eof
