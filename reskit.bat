@@ -97,6 +97,7 @@ Reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /
 Reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "NavPaneExpandToCurrentFolder" /t REG_DWORD /d "1" /f
 Reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "HideFileExt" /t REG_DWORD /d "0" /f
 Reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "Hidden" /t REG_DWORD /d "1" /f
+Reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "Start_TrackDocs" /t REG_DWORD /d "0" /f
 Reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "ShowRecommendations" /t REG_DWORD /d "0" /f
 Reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "ShowRecent" /t REG_DWORD /d "0" /f
 Reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "ShowFrequent" /t REG_DWORD /d "0" /f
@@ -315,7 +316,7 @@ echo 41. KMS인증 (외부)                  42. KMS인증 (사용자 지정)
 echo 43. 라이선스 정보 보기              44. 전체 License Key 제거
 echo.
 echo * Office 기타 설정
-echo 51. Excel 기본글꼴(본문 글꼴,9)
+echo 51. Excel 기본글꼴(본문 글꼴,9)     52. OneNote Tray Icon 제거
 echo.
 echo  0. return Main
 echo --------------------------------------------------------------------------
@@ -501,6 +502,13 @@ goto:eof
 
 :officemenu_51
 Reg.exe add "HKCU\Software\Microsoft\Office\16.0\Excel\Options" /v "Font" /t REG_SZ /d "본문 글꼴,9" /f
+pause
+goto:eof
+
+
+:officemenu_52
+Reg.exe add "HKCU\Software\Microsoft\Office\16.0\OneNote\Options\Other" /v "RunSystemTrayApp" /t REG_DWORD /d "0" /f
+Reg.exe add "HKCU\Software\Microsoft\Office\16.0\OneNote\Options\Other" /v "SystemTrayAppDefaultBehavior" /t REG_DWORD /d "2" /f
 pause
 goto:eof
 
