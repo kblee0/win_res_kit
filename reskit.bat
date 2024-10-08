@@ -1,6 +1,9 @@
 @echo off
 goto :check_admin
 
+for /f "tokens=3 delims=." %%b in ('ver') do set WINVER=%%b
+IF %WINVER% LSS 20000 ( SET WINVER=10 ) ELSE ( SET WINVER=11 )
+
 :main
 cls
 
@@ -70,6 +73,7 @@ pause
 goto:eof
 
 :mainmenu_4
+IF %WINVER% NEQ 11 goto:eof
 echo 위젯 비활성화
 Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Dsh" /v "AllowNewsAndInterests" /t REG_DWORD /d "0" /f
 
@@ -77,6 +81,7 @@ pause
 goto:eof
 
 :mainmenu_5
+IF %WINVER% NEQ 11 goto:eof
 echo CoPilot 비활성화
 Reg.exe add "HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot" /v "TurnOffWindowsCopilot" /t REG_DWORD /d "1" /f
 
@@ -160,6 +165,16 @@ powershell -Command "Get-AppxPackage -AllUsers Microsoft.Copilot                
 powershell -Command "Get-AppxPackage -AllUsers Microsoft.BingNews                     | Remove-AppxPackage"
 powershell -Command "Get-AppxPackage -AllUsers Microsoft.BingSearch                   | Remove-AppxPackage"
 powershell -Command "Get-AppxPackage -AllUsers Microsoft.BingWeather                  | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.Office.OneNote               | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.SkypeApp                     | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.ZuneMusic                    | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.ZuneVideo                    | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.Microsoft3DViewer            | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.MicrosoftOfficeHub           | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.MicrosoftSolitaireCollection | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.MixedReality.Portal          | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.BingWeather                  | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage -AllUsers Microsoft.WindowsMaps                  | Remove-AppxPackage"
 
 REM Microsoft.WindowsMaps
 REM sc delete MapsBroker
