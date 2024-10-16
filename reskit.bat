@@ -1,9 +1,6 @@
 @echo off
 goto :check_admin
 
-for /f "tokens=3 delims=." %%b in ('ver') do set WINVER=%%b
-IF %WINVER% LSS 20000 ( SET WINVER=10 ) ELSE ( SET WINVER=11 )
-
 :main
 cls
 
@@ -73,7 +70,6 @@ pause
 goto:eof
 
 :mainmenu_4
-IF %WINVER% NEQ 11 goto:eof
 echo 위젯 비활성화
 Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Dsh" /v "AllowNewsAndInterests" /t REG_DWORD /d "0" /f
 
@@ -81,7 +77,6 @@ pause
 goto:eof
 
 :mainmenu_5
-IF %WINVER% NEQ 11 goto:eof
 echo CoPilot 비활성화
 Reg.exe add "HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot" /v "TurnOffWindowsCopilot" /t REG_DWORD /d "1" /f
 
